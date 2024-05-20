@@ -1,0 +1,69 @@
+<h1>{{title}}</h1> <!-- Titolo della tabella -->
+<table>
+  <thead>
+    <tr>
+      <th>Input | Input &not;</th>
+      <th>AND | AND &not;</th>
+      <th>OR | OR &not;</th>
+      <th>AND | AND &not;</th>
+      <th>OUTPUT | OUTPUT &not;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of rows; let rowIndex = index">
+      <td>
+        <span class="blue-text" (click)="showInputComponent(rowIndex)">{{ row.input }}</span> <!-- Mostra il contatore -->
+      </td>
+      <td>
+        <span class="blue-text" (click)="showCheckComponent('and1', rowIndex)">
+          <div class="number-row">
+            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]" [ngStyle]="{'color': row.and1CheckboxStates.includes(i) ? 'black' : 'gray'}">
+              {{ i }}
+            </span>
+          </div>
+        </span>
+      </td>
+      <td>
+        <span class="blue-text" (click)="showCheckComponent('or', rowIndex)">
+          <div class="number-row">
+            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]" [ngStyle]="{'color': row.orCheckboxStates.includes(i) ? 'black' : 'gray'}">
+              {{ i }}
+            </span>
+          </div>
+        </span>
+      </td>
+      <td>
+        <span class="blue-text" (click)="showCheckComponent('and2', rowIndex)">
+          <div class="number-row">
+            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]" [ngStyle]="{'color': row.and2CheckboxStates.includes(i) ? 'black' : 'gray'}">
+              {{ i }}
+            </span>
+          </div>
+        </span>
+      </td>
+      <td>
+        <span class="blue-text" (click)="showOutputComponent(rowIndex)">{{ row.output }}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <a>
+    <input type="button" name="conferma" value="calcola">
+  </a>
+</div>
+<div *ngIf="selectedInputIndex !== null">
+  <app-cell-input 
+    [inputValue]="rows[selectedInputIndex].input.toString()"
+    [inputType]="rows[selectedInputIndex].inputType"
+    (updateInputType)="updateInputType(selectedInputIndex, $event)"
+  ></app-cell-input>
+</div>
+<div *ngIf="selectedCheckColumn && selectedCheckIndex !== null">
+  <app-cell-check
+    [column]="selectedCheckColumn"
+    [index]="selectedCheckIndex"
+    [selectedStates]="getCheckboxStates(selectedCheckColumn, selectedCheckIndex)"
+    (update)="updateNumbers($event)">
+  </app-cell-check>
+</div>

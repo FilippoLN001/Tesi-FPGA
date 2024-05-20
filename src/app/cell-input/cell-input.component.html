@@ -1,0 +1,21 @@
+<div>
+  <p>{{ inputValue }}</p> <!-- Mostra il valore dell'input -->
+  <label>
+    <input 
+      type="radio" 
+      name="inputType" 
+      value="Input" 
+      [checked]="inputType === 'Input'" 
+      (change)="onInputTypeChange('Input')"> 
+    Input
+  </label>
+  <label>
+    <input 
+      type="radio" 
+      name="inputType" 
+      value="Pulser" 
+      [checked]="inputType === 'Pulser'" 
+      (change)="onInputTypeChange('Pulser')"> 
+    Pulser
+  </label>
+</div>
