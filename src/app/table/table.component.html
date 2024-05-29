@@ -1,4 +1,4 @@
-<h1>{{title}}</h1> <!-- Titolo della tabella -->
+<h1>{{ title }}</h1>
 <table>
   <thead>
     <tr>
@@ -12,37 +12,47 @@
   <tbody>
     <tr *ngFor="let row of rows; let rowIndex = index">
       <td>
-        <span class="blue-text" (click)="showInputComponent(rowIndex)">{{ row.input }}</span> <!-- Mostra il contatore -->
+        <span class="blue-text" (click)="showInputComponent(rowIndex)">
+          {{ row.input }}
+        </span>
       </td>
       <td>
         <span class="blue-text" (click)="showCheckComponent('and1', rowIndex)">
+          {{ getNumbers('and1', rowIndex) }}
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]" [ngStyle]="{'color': row.and1CheckboxStates.includes(i) ? 'black' : 'gray'}">
-              {{ i }}
+            <span *ngFor="let state of row.and1CheckboxStates; let i = index"
+                  [ngStyle]="{'color': state.active ? 'black' : 'gray'}">
+              {{ i + 1 }}
             </span>
           </div>
         </span>
       </td>
       <td>
         <span class="blue-text" (click)="showCheckComponent('or', rowIndex)">
+          {{ getNumbers('or', rowIndex) }}
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]" [ngStyle]="{'color': row.orCheckboxStates.includes(i) ? 'black' : 'gray'}">
-              {{ i }}
+            <span *ngFor="let state of row.orCheckboxStates; let i = index"
+                  [ngStyle]="{'color': state.active ? 'black' : 'gray'}">
+              {{ i + 1 }}
             </span>
           </div>
         </span>
       </td>
       <td>
         <span class="blue-text" (click)="showCheckComponent('and2', rowIndex)">
+          {{ getNumbers('and2', rowIndex) }}
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]" [ngStyle]="{'color': row.and2CheckboxStates.includes(i) ? 'black' : 'gray'}">
-              {{ i }}
+            <span *ngFor="let state of row.and2CheckboxStates; let i = index"
+                  [ngStyle]="{'color': state.active ? 'black' : 'gray'}">
+              {{ i + 1 }}
             </span>
           </div>
         </span>
       </td>
       <td>
-        <span class="blue-text" (click)="showOutputComponent(rowIndex)">{{ row.output }}</span>
+        <span class="blue-text" (click)="showOutputComponent(rowIndex)">
+          {{ row.output }}
+        </span>
       </td>
     </tr>
   </tbody>
@@ -53,11 +63,11 @@
   </a>
 </div>
 <div *ngIf="selectedInputIndex !== null">
-  <app-cell-input 
-    [inputValue]="rows[selectedInputIndex].input.toString()"
+  <app-cell-input
+    [inputValue]="rows[selectedInputIndex].input"
     [inputType]="rows[selectedInputIndex].inputType"
-    (updateInputType)="updateInputType(selectedInputIndex, $event)"
-  ></app-cell-input>
+    (updateInputType)="updateInputType($event)">
+  </app-cell-input>
 </div>
 <div *ngIf="selectedCheckColumn && selectedCheckIndex !== null">
   <app-cell-check

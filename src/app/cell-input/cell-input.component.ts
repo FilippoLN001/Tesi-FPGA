@@ -6,8 +6,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./cell-input.component.css']
 })
 export class CellInputComponent {
-  @Input() inputValue: string | undefined; // Riceve il valore dell'input dalla cella selezionata
-  @Input() inputType: 'Input' | 'Pulser' | '' | undefined; // Riceve il tipo di input dalla cella selezionata
+  @Input() inputValue!: number; // Riceve il valore dell'input dalla cella selezionata come numero
+  @Input() inputType!: 'Input' | 'Pulser'; // Riceve il tipo di input dalla cella selezionata
   @Output() updateInputType = new EventEmitter<'Input' | 'Pulser'>(); // Evento di aggiornamento
 
   // Emette l'evento di aggiornamento quando il tipo di input cambia
