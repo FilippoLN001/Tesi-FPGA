@@ -1,21 +1,9 @@
 <div>
-  <p>{{ inputValue }}</p> <!-- Mostra il valore dell'input -->
+  <p>{{ inputValue }}</p>
   <label>
-    <input 
-      type="radio" 
-      name="inputType" 
-      value="Input" 
-      [checked]="inputType === 'Input'" 
-      (change)="onInputTypeChange('Input')"> 
-    Input
+    <input type="radio" name="inputType" value="Input" [checked]="inputType === 'Input'" (change)="onInputTypeChange('Input')"> Input
   </label>
   <label>
-    <input 
-      type="radio" 
-      name="inputType" 
-      value="Pulser" 
-      [checked]="inputType === 'Pulser'" 
-      (change)="onInputTypeChange('Pulser')"> 
-    Pulser
+    <input type="radio" name="inputType" value="Pulser" [checked]="inputType === 'Pulser'" (change)="onInputTypeChange('Pulser')"> Pulser
   </label>
 </div>

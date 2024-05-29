@@ -1,9 +1,8 @@
-<div *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]">
-    <label>
-      <input type="checkbox" [checked]="values.includes(i)" (change)="toggleValue(i)"> Attivo {{i}}
-    </label>
-    <label>
-      <input type="checkbox" [checked]="values.includes(-i)" (change)="toggleValue(-i)"> Negato {{i}}
-    </label>
-  </div>
-  
+<div *ngFor="let state of selectedStates; let i = index">
+  <label>
+    <input type="checkbox" [checked]="state.active" (change)="toggleActive(i)"> Attivo {{ i + 1 }}
+  </label>
+  <label>
+    <input type="checkbox" [checked]="state.negated" (change)="toggleNegated(i)"> Negato {{ i + 1 }}
+  </label>
+</div>
