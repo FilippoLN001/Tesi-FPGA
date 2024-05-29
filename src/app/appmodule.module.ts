@@ -7,13 +7,15 @@ import { TableComponent } from './table/table.component';
 import { CellInputComponent } from './cell-input/cell-input.component';
 import { CellCheckComponent } from './cell-check/cell-check.component';
 import { AppRoutingModule } from './app.routes';  // Importa il modulo di routing
+import { CellOutputComponent } from './cell-output/cell-output.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
     CellInputComponent,
-    CellCheckComponent
+    CellCheckComponent,
+    CellOutputComponent
   ],
   imports: [
     BrowserModule,

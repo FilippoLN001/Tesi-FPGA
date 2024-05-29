@@ -1,27 +1,38 @@
-/* styles.css */
-
 table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  .blue-text {
-    color: blue;
-    cursor: pointer;
-  }
-  
-  .number-row {
-    display: flex;
-    gap: 5px;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.blue-text {
+  color: blue;
+  cursor: pointer;
+}
+
+.number-row {
+  display: flex;
+  gap: 5px;
+}
+
+.number-row span {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+
+.number-row span.gray {
+  color: gray;
+}
+
+.number-row span.black {
+  color: black;
+}
