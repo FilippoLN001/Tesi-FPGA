@@ -12,6 +12,7 @@ interface TableRow {
   or: string;
   and2: string;
   output: number;
+  outputNegated: boolean; // Aggiungiamo questa proprietà
   and1CheckboxStates: CheckboxState[];
   orCheckboxStates: CheckboxState[];
   and2CheckboxStates: CheckboxState[];
@@ -33,6 +34,7 @@ export class TableComponent implements OnInit, OnDestroy {
     or: '',
     and2: '',
     output: 0,
+    outputNegated: false, // Inizializziamo la proprietà
     and1CheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false })),
     orCheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false })),
     and2CheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false }))
@@ -41,6 +43,7 @@ export class TableComponent implements OnInit, OnDestroy {
   selectedInputIndex: number | null = null;
   selectedCheckColumn: 'and1' | 'or' | 'and2' | null = null;
   selectedCheckIndex: number | null = null;
+  selectedOutputIndex: number | null = null; // Aggiungiamo questa proprietà
   intervalId: ReturnType<typeof setInterval> | null = null;
 
   ngOnInit() {
@@ -66,18 +69,21 @@ export class TableComponent implements OnInit, OnDestroy {
     this.selectedInputIndex = index;
     this.selectedCheckColumn = null;
     this.selectedCheckIndex = null;
+    this.selectedOutputIndex = null;
   }
 
   showCheckComponent(column: 'and1' | 'or' | 'and2', index: number) {
     this.selectedInputIndex = null;
     this.selectedCheckColumn = column;
     this.selectedCheckIndex = index;
+    this.selectedOutputIndex = null;
   }
 
   showOutputComponent(index: number) {
     this.selectedInputIndex = null;
     this.selectedCheckColumn = null;
-    this.selectedCheckIndex = index;
+    this.selectedCheckIndex = null;
+    this.selectedOutputIndex = index;
   }
 
   updateNumbers(event: { column: 'and1' | 'or' | 'and2', index: number, values: CheckboxState[] }) {
@@ -89,6 +95,12 @@ export class TableComponent implements OnInit, OnDestroy {
   updateInputType(inputType: 'Input' | 'Pulser') {
     if (this.selectedInputIndex !== null) {
       this.rows[this.selectedInputIndex].inputType = inputType;
+    }
+  }
+
+  updateOutputNegated(negated: boolean) {
+    if (this.selectedOutputIndex !== null) {
+      this.rows[this.selectedOutputIndex].outputNegated = negated;
     }
   }
 

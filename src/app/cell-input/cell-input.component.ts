@@ -6,12 +6,31 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./cell-input.component.css']
 })
 export class CellInputComponent {
-  @Input() inputValue!: number; // Riceve il valore dell'input dalla cella selezionata come numero
-  @Input() inputType!: 'Input' | 'Pulser'; // Riceve il tipo di input dalla cella selezionata
-  @Output() updateInputType = new EventEmitter<'Input' | 'Pulser'>(); // Evento di aggiornamento
+  @Input() inputValue!: number;
+  @Input() inputType!: 'Input' | 'Pulser';
+  @Output() updateInputType = new EventEmitter<'Input' | 'Pulser'>();
 
-  // Emette l'evento di aggiornamento quando il tipo di input cambia
+  // Stato per l'opzione 'Input'
+  sampled: boolean = false;
+  edgeDetect: boolean = false;
+  edge: boolean = false;
+
+  // Stato per l'opzione 'Pulser'
+  frequency: number = 0;
+  duty: number = 0;
+  polarity: boolean = false;
+
   onInputTypeChange(inputType: 'Input' | 'Pulser') {
     this.updateInputType.emit(inputType);
+  }
+
+  // Emette gli stati delle variabili booleane per l'opzione 'Input'
+  onInputOptionChange() {
+    console.log('Input Options:', { sampled: this.sampled, edgeDetect: this.edgeDetect, edge: this.edge });
+  }
+
+  // Emette gli stati delle variabili per l'opzione 'Pulser'
+  onPulserOptionChange() {
+    console.log('Pulser Options:', { frequency: this.frequency, duty: this.duty, polarity: this.polarity });
   }
 }

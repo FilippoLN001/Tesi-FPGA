@@ -1,9 +1,47 @@
-<div>
+<div class="cell-input-container">
   <p>{{ inputValue }}</p>
   <label>
     <input type="radio" name="inputType" value="Input" [checked]="inputType === 'Input'" (change)="onInputTypeChange('Input')"> Input
   </label>
   <label>
     <input type="radio" name="inputType" value="Pulser" [checked]="inputType === 'Pulser'" (change)="onInputTypeChange('Pulser')"> Pulser
+  </label>
+</div>
+
+<div *ngIf="inputType === 'Input'" class="cell-input-options">
+  <label>
+    Sampled:
+    <input type="radio" name="sampled" value="true" [(ngModel)]="sampled" (change)="onInputOptionChange()"> True
+    <input type="radio" name="sampled" value="false" [(ngModel)]="sampled" (change)="onInputOptionChange()"> False
+  </label>
+  <br>
+  <label>
+    Edge Detect:
+    <input type="radio" name="edgeDetect" value="true" [(ngModel)]="edgeDetect" (change)="onInputOptionChange()"> True
+    <input type="radio" name="edgeDetect" value="false" [(ngModel)]="edgeDetect" (change)="onInputOptionChange()"> False
+  </label>
+  <br>
+  <label>
+    Edge:
+    <input type="radio" name="edge" value="true" [(ngModel)]="edge" (change)="onInputOptionChange()"> True
+    <input type="radio" name="edge" value="false" [(ngModel)]="edge" (change)="onInputOptionChange()"> False
+  </label>
+</div>
+
+<div *ngIf="inputType === 'Pulser'" class="cell-input-options">
+  <label>
+    Frequency:
+    <input type="number" [(ngModel)]="frequency" (change)="onPulserOptionChange()">
+  </label>
+  <br>
+  <label>
+    Duty:
+    <input type="number" [(ngModel)]="duty" (change)="onPulserOptionChange()">
+  </label>
+  <br>
+  <label>
+    Polarity:
+    <input type="radio" name="polarity" value="true" [(ngModel)]="polarity" (change)="onPulserOptionChange()"> True
+    <input type="radio" name="polarity" value="false" [(ngModel)]="polarity" (change)="onPulserOptionChange()"> False
   </label>
 </div>

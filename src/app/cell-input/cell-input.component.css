@@ -1,0 +1,31 @@
+.cell-input-container {
+    margin-top: 10px;
+  }
+  
+  .cell-input-container p {
+    font-weight: bold;
+  }
+  
+  .cell-input-container label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .cell-input-container input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .cell-input-options {
+    margin-top: 10px;
+  }
+  
+  .cell-input-options label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .cell-input-options input[type="radio"],
+  .cell-input-options input[type="number"] {
+    margin-right: 10px;
+  }
+  
