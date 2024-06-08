@@ -11,20 +11,20 @@
 <div *ngIf="inputType === 'Input'" class="cell-input-options">
   <label>
     Sampled:
-    <input type="radio" name="sampled" value="true" [(ngModel)]="sampled" (change)="onInputOptionChange()"> True
-    <input type="radio" name="sampled" value="false" [(ngModel)]="sampled" (change)="onInputOptionChange()"> False
+    <input type="radio" name="sampled" [(ngModel)]="sampled" [value]="true" (change)="onInputOptionChange()"> True
+    <input type="radio" name="sampled" [(ngModel)]="sampled" [value]="false" (change)="onInputOptionChange()"> False
   </label>
   <br>
   <label>
     Edge Detect:
-    <input type="radio" name="edgeDetect" value="true" [(ngModel)]="edgeDetect" (change)="onInputOptionChange()"> True
-    <input type="radio" name="edgeDetect" value="false" [(ngModel)]="edgeDetect" (change)="onInputOptionChange()"> False
+    <input type="radio" name="edgeDetect" [(ngModel)]="edgeDetect" [value]="true" (change)="onInputOptionChange()"> True
+    <input type="radio" name="edgeDetect" [(ngModel)]="edgeDetect" [value]="false" (change)="onInputOptionChange()"> False
   </label>
   <br>
   <label>
     Edge:
-    <input type="radio" name="edge" value="true" [(ngModel)]="edge" (change)="onInputOptionChange()"> True
-    <input type="radio" name="edge" value="false" [(ngModel)]="edge" (change)="onInputOptionChange()"> False
+    <input type="radio" name="edge" [(ngModel)]="edge" [value]="true" (change)="onInputOptionChange()"> True
+    <input type="radio" name="edge" [(ngModel)]="edge" [value]="false" (change)="onInputOptionChange()"> False
   </label>
 </div>
 
@@ -41,7 +41,7 @@
   <br>
   <label>
     Polarity:
-    <input type="radio" name="polarity" value="true" [(ngModel)]="polarity" (change)="onPulserOptionChange()"> True
-    <input type="radio" name="polarity" value="false" [(ngModel)]="polarity" (change)="onPulserOptionChange()"> False
+    <input type="radio" name="polarity" [(ngModel)]="polarity" [value]="true" (change)="onPulserOptionChange()"> True
+    <input type="radio" name="polarity" [(ngModel)]="polarity" [value]="false" (change)="onPulserOptionChange()"> False
   </label>
 </div>

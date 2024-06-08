@@ -64,8 +64,8 @@
 </div>
 <div *ngIf="selectedInputIndex !== null" class="cell-input-container">
   <app-cell-input
-    [inputValue]="rows[selectedInputIndex].input"
-    [inputType]="rows[selectedInputIndex].inputType"
+    [inputValue]="rows[selectedInputIndex]['input']"
+    [inputType]="rows[selectedInputIndex]['inputType']"
     (updateInputType)="updateInputType($event)">
   </app-cell-input>
 </div>
@@ -79,7 +79,7 @@
 </div>
 <div *ngIf="selectedOutputIndex !== null">
   <app-cell-output
-    [outputNegated]="rows[selectedOutputIndex].outputNegated"
+    [outputNegated]="rows[selectedOutputIndex]['outputNegated']"
     (updateOutputNegated)="updateOutputNegated($event)">
   </app-cell-output>
 </div>

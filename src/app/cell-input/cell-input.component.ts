@@ -1,35 +1,52 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-cell-input',
   templateUrl: './cell-input.component.html',
   styleUrls: ['./cell-input.component.css']
 })
-export class CellInputComponent {
+export class CellInputComponent implements OnInit, OnChanges {
   @Input() inputValue!: number;
   @Input() inputType!: 'Input' | 'Pulser';
   @Output() updateInputType = new EventEmitter<'Input' | 'Pulser'>();
 
-  // Stato per l'opzione 'Input'
-  sampled: boolean = false;
-  edgeDetect: boolean = false;
-  edge: boolean = false;
+  sampled: boolean = true;
+  edgeDetect: boolean = true;
+  edge: boolean = true;
 
-  // Stato per l'opzione 'Pulser'
   frequency: number = 0;
   duty: number = 0;
   polarity: boolean = false;
 
-  onInputTypeChange(inputType: 'Input' | 'Pulser') {
-    this.updateInputType.emit(inputType);
+  ngOnInit() {
+    this.setDefaults();
   }
 
-  // Emette gli stati delle variabili booleane per l'opzione 'Input'
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['inputType'] && changes['inputType'].currentValue === 'Input') {
+      this.setDefaults();
+    }
+  }
+
+  setDefaults() {
+    if (this.inputType === 'Input') {
+      this.sampled = true;
+      this.edgeDetect = true;
+      this.edge = true;
+    }
+  }
+
+  onInputTypeChange(inputType: 'Input' | 'Pulser') {
+    this.updateInputType.emit(inputType);
+    if (inputType === 'Input') {
+      this.setDefaults();
+    }
+  }
+
   onInputOptionChange() {
     console.log('Input Options:', { sampled: this.sampled, edgeDetect: this.edgeDetect, edge: this.edge });
   }
 
-  // Emette gli stati delle variabili per l'opzione 'Pulser'
   onPulserOptionChange() {
     console.log('Pulser Options:', { frequency: this.frequency, duty: this.duty, polarity: this.polarity });
   }
