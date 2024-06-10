@@ -13,8 +13,19 @@
     <tr *ngFor="let row of rows; let rowIndex = index">
       <td>
         <span class="blue-text" (click)="showInputComponent(rowIndex)">
-          {{ row.input }}
+          {{ row.input }} {{ row.inputUnit }}
         </span>
+        <div *ngIf="selectedInputIndex === rowIndex">
+          <label>
+            <input type="radio" name="inputUnit{{rowIndex}}" value="ms" [checked]="row.inputUnit === 'ms'" (change)="updateInputUnit('ms')"> ms
+          </label>
+          <label>
+            <input type="radio" name="inputUnit{{rowIndex}}" value="us" [checked]="row.inputUnit === 'us'" (change)="updateInputUnit('us')"> us
+          </label>
+          <label>
+            <input type="radio" name="inputUnit{{rowIndex}}" value="ns" [checked]="row.inputUnit === 'ns'" (change)="updateInputUnit('ns')"> ns
+          </label>
+        </div>
       </td>
       <td>
         <span class="blue-text" (click)="showCheckComponent('and1', rowIndex)">
@@ -51,8 +62,19 @@
       </td>
       <td>
         <span class="blue-text" (click)="showOutputComponent(rowIndex)">
-          {{ row.output }}<span *ngIf="row.outputNegated"> &not;</span>
+          {{ row.output }} {{ row.outputUnit }}<span *ngIf="row.outputNegated"> &not;</span>
         </span>
+        <div *ngIf="selectedOutputIndex === rowIndex">
+          <label>
+            <input type="radio" name="outputUnit{{rowIndex}}" value="ms" [checked]="row.outputUnit === 'ms'" (change)="updateOutputUnit('ms')"> ms
+          </label>
+          <label>
+            <input type="radio" name="outputUnit{{rowIndex}}" value="us" [checked]="row.outputUnit === 'us'" (change)="updateOutputUnit('us')"> us
+          </label>
+          <label>
+            <input type="radio" name="outputUnit{{rowIndex}}" value="ns" [checked]="row.outputUnit === 'ns'" (change)="updateOutputUnit('ns')"> ns
+          </label>
+        </div>
       </td>
     </tr>
   </tbody>

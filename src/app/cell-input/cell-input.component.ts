@@ -41,6 +41,9 @@ export class CellInputComponent implements OnInit, OnChanges {
     if (inputType === 'Input') {
       this.setDefaults();
     }
+    if (inputType=== 'Pulser'){
+      this.polarity=true
+    }
   }
 
   onInputOptionChange() {

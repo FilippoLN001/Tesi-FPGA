@@ -23,14 +23,14 @@
   <br>
   <label>
     Edge:
-    <input type="radio" name="edge" [(ngModel)]="edge" [value]="true" (change)="onInputOptionChange()"> True
-    <input type="radio" name="edge" [(ngModel)]="edge" [value]="false" (change)="onInputOptionChange()"> False
+    <input type="radio" name="edge" [(ngModel)]="edge" [value]="true" (change)="onInputOptionChange()"> Rising
+    <input type="radio" name="edge" [(ngModel)]="edge" [value]="false" (change)="onInputOptionChange()"> Falling
   </label>
 </div>
 
 <div *ngIf="inputType === 'Pulser'" class="cell-input-options">
   <label>
-    Frequency:
+    Period:
     <input type="number" [(ngModel)]="frequency" (change)="onPulserOptionChange()">
   </label>
   <br>
