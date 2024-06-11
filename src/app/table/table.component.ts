@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { saveAs } from 'file-saver';
 
 interface CheckboxState {
   active: boolean;
@@ -7,13 +8,13 @@ interface CheckboxState {
 
 interface TableRow {
   input: number;
-  inputUnit: 'ms' | 'us' | 'ns';  
+  inputUnit: 'ms' | 'us' | 'ns';
   inputType: 'Input' | 'Pulser';
   and1: string;
   or: string;
   and2: string;
   output: number;
-  outputUnit: 'ms' | 'us' | 'ns';  
+  outputUnit: 'ms' | 'us' | 'ns';
   outputNegated: boolean;
   and1CheckboxStates: CheckboxState[];
   orCheckboxStates: CheckboxState[];
@@ -31,13 +32,13 @@ export class TableComponent implements OnInit, OnDestroy {
   title = 'Tabella Interattiva';
   rows: TableRow[] = Array(8).fill(0).map(() => ({
     input: 0,
-    inputUnit: 'ms',  // Inizializziamo la proprietà
+    inputUnit: 'ms',
     inputType: 'Input',
     and1: '',
     or: '',
     and2: '',
     output: 0,
-    outputUnit: 'ms',  // Inizializziamo la proprietà
+    outputUnit: 'ms',
     outputNegated: false,
     and1CheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false })),
     orCheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false })),
@@ -131,5 +132,11 @@ export class TableComponent implements OnInit, OnDestroy {
   getCheckboxStates(column: 'and1' | 'or' | 'and2', index: number): CheckboxState[] {
     const checkboxColumn: CheckboxColumn = `${column}CheckboxStates` as CheckboxColumn;
     return this.rows[index][checkboxColumn];
+  }
+
+  generateJsonFile() {
+    const json = JSON.stringify(this.rows, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    saveAs(blob, 'table-data.json');
   }
 }

@@ -13,7 +13,7 @@
     <tr *ngFor="let row of rows; let rowIndex = index">
       <td>
         <span class="blue-text" (click)="showInputComponent(rowIndex)">
-          {{ row.input }} {{ row.inputUnit }}
+          {{ rowIndex }} - {{ row.input }} {{ row.inputUnit }}
         </span>
         <div *ngIf="selectedInputIndex === rowIndex">
           <label>
@@ -80,9 +80,7 @@
   </tbody>
 </table>
 <div>
-  <a>
-    <input type="button" name="conferma" value="calcola">
-  </a>
+  <button (click)="generateJsonFile()">Calcola</button>
 </div>
 <div *ngIf="selectedInputIndex !== null" class="cell-input-container">
   <app-cell-input
