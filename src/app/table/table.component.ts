@@ -7,9 +7,16 @@ interface CheckboxState {
 }
 
 interface TableRow {
+  id: number;  // Aggiungiamo questa proprietà
   input: number;
   inputUnit: 'ms' | 'us' | 'ns';
   inputType: 'Input' | 'Pulser';
+  sampled?: boolean;
+  edgeDetect?: boolean;
+  edge?: boolean;
+  frequency?: number;
+  duty?: number;
+  polarity?: boolean;
   and1: string;
   or: string;
   and2: string;
@@ -30,10 +37,14 @@ type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxS
 })
 export class TableComponent implements OnInit, OnDestroy {
   title = 'Tabella Interattiva';
-  rows: TableRow[] = Array(8).fill(0).map(() => ({
+  rows: TableRow[] = Array(8).fill(0).map((_, index) => ({
+    id: index + 1,  // Assegniamo un ID univoco a ciascuna riga
     input: 0,
     inputUnit: 'ms',
     inputType: 'Input',
+    sampled: true,
+    edgeDetect: true,
+    edge: true,
     and1: '',
     or: '',
     and2: '',
@@ -135,7 +146,49 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   generateJsonFile() {
-    const json = JSON.stringify(this.rows, null, 2);
+    const jsonRows = this.rows.map(row => {
+      const rowData: any = {
+        id: row.id,  // Includiamo l'ID nel file JSON
+        input: row.input,
+        inputUnit: row.inputUnit,
+        inputType: row.inputType,
+        and1: row.and1,
+        or: row.or,
+        and2: row.and2,
+        output: row.output,
+        outputUnit: row.outputUnit,
+        outputNegated: row.outputNegated,
+        and1CheckboxStates: row.and1CheckboxStates.map((state, index) => ({
+          number: index + 1,
+          active: state.active,
+          negated: state.negated
+        })),
+        orCheckboxStates: row.orCheckboxStates.map((state, index) => ({
+          number: index + 1,
+          active: state.active,
+          negated: state.negated
+        })),
+        and2CheckboxStates: row.and2CheckboxStates.map((state, index) => ({
+          number: index + 1,
+          active: state.active,
+          negated: state.negated
+        })),
+      };
+
+      if (row.inputType === 'Input') {
+        rowData.sampled = row.sampled;
+        rowData.edgeDetect = row.edgeDetect;
+        rowData.edge = row.edge;
+      } else if (row.inputType === 'Pulser') {
+        rowData.frequency = row.frequency;
+        rowData.duty = row.duty;
+        rowData.polarity = row.polarity;
+      }
+
+      return rowData;
+    });
+
+    const json = JSON.stringify(jsonRows, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     saveAs(blob, 'table-data.json');
   }

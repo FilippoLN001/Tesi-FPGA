@@ -2,6 +2,7 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>  <!-- Aggiungi l'intestazione della colonna ID -->
       <th>Input | Input &not;</th>
       <th>AND | AND &not;</th>
       <th>OR | OR &not;</th>
@@ -11,9 +12,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let row of rows; let rowIndex = index">
+      <td>{{ row.id }}</td>  <!-- Mostra l'ID della riga -->
       <td>
         <span class="blue-text" (click)="showInputComponent(rowIndex)">
-          {{ rowIndex }} - {{ row.input }} {{ row.inputUnit }}
+          {{ row.input }} {{ row.inputUnit }}
         </span>
         <div *ngIf="selectedInputIndex === rowIndex">
           <label>

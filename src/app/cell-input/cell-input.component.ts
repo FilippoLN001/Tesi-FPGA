@@ -16,7 +16,7 @@ export class CellInputComponent implements OnInit, OnChanges {
 
   frequency: number = 0;
   duty: number = 0;
-  polarity: boolean = false;
+  polarity: boolean = true; // Impostiamo polarity su true di default
 
   ngOnInit() {
     this.setDefaults();
@@ -33,6 +33,10 @@ export class CellInputComponent implements OnInit, OnChanges {
       this.sampled = true;
       this.edgeDetect = true;
       this.edge = true;
+    } else if (this.inputType === 'Pulser') {
+      this.frequency = 0;
+      this.duty = 0;
+      this.polarity = true;
     }
   }
 
@@ -40,9 +44,8 @@ export class CellInputComponent implements OnInit, OnChanges {
     this.updateInputType.emit(inputType);
     if (inputType === 'Input') {
       this.setDefaults();
-    }
-    if (inputType=== 'Pulser'){
-      this.polarity=true
+    } else if (inputType === 'Pulser') {
+      this.polarity = true; // Impostiamo polarity su true quando si seleziona Pulser
     }
   }
 
