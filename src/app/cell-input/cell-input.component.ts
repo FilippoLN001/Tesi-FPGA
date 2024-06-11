@@ -14,7 +14,7 @@ export class CellInputComponent implements OnInit, OnChanges {
   edgeDetect: boolean = true;
   edge: boolean = true;
 
-  frequency: number = 0;
+  period: number = 0;
   duty: number = 0;
   polarity: boolean = true; // Impostiamo polarity su true di default
 
@@ -34,7 +34,7 @@ export class CellInputComponent implements OnInit, OnChanges {
       this.edgeDetect = true;
       this.edge = true;
     } else if (this.inputType === 'Pulser') {
-      this.frequency = 0;
+      this.period = 0;
       this.duty = 0;
       this.polarity = true;
     }
@@ -54,6 +54,6 @@ export class CellInputComponent implements OnInit, OnChanges {
   }
 
   onPulserOptionChange() {
-    console.log('Pulser Options:', { frequency: this.frequency, duty: this.duty, polarity: this.polarity });
+    console.log('Pulser Options:', { frequency: this.period, duty: this.duty, polarity: this.polarity });
   }
 }
