@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TableComponent } from './table/table.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: TableComponent },
   // Aggiungi altre rotte qui se necessario
 ];
