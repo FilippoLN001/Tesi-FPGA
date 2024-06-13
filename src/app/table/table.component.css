@@ -30,9 +30,27 @@ th {
 }
 
 .number-row span.gray {
-  color: gray;
+  color: #d3d3d3; /* Grigio più chiaro per maggiore contrasto */
 }
 
 .number-row span.black {
-  color: black;
+  color: #000000; /* Nero assoluto per massimo contrasto */
+}
+
+.negation-symbol {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+
+.negation-symbol.gray {
+  color: #d3d3d3; /* Grigio più chiaro per maggiore contrasto */
+}
+
+.negation-symbol.red {
+  color: red; /* Rosso per il simbolo di negazione */
+}
+
+.confirmation{
+  margin-top: 20px;
 }

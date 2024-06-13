@@ -2,7 +2,7 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th>  <!-- Aggiungi l'intestazione della colonna ID -->
+      <th>ID</th>
       <th>Input | Input &not;</th>
       <th>AND | AND &not;</th>
       <th>OR | OR &not;</th>
@@ -12,7 +12,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let row of rows; let rowIndex = index">
-      <td>{{ row.id }}</td>  <!-- Mostra l'ID della riga -->
+      <td>{{ row.id }}</td>
       <td>
         <span class="blue-text" (click)="showInputComponent(rowIndex)">
           {{ row.input }} {{ row.inputUnit }}
@@ -32,10 +32,18 @@
       <td>
         <span class="blue-text" (click)="showCheckComponent('and1', rowIndex)">
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
-                  [class.gray]="!row.and1CheckboxStates[i-1].active"
-                  [class.black]="row.and1CheckboxStates[i-1].active">
-              {{ i }}
+            <span *ngFor="let state of row.and1CheckboxStates; let i = index"
+                  [class.gray]="!state.active"
+                  [class.black]="state.active">
+              {{ i + 1 }}
+            </span>
+          </div>
+          <div class="number-row">
+            <span *ngFor="let state of row.and1CheckboxStates; let i = index"
+                  class="negation-symbol"
+                  [class.gray]="!state.negated"
+                  [class.red]="state.negated">
+              &not;
             </span>
           </div>
         </span>
@@ -43,10 +51,18 @@
       <td>
         <span class="blue-text" (click)="showCheckComponent('or', rowIndex)">
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
-                  [class.gray]="!row.orCheckboxStates[i-1].active"
-                  [class.black]="row.orCheckboxStates[i-1].active">
-              {{ i }}
+            <span *ngFor="let state of row.orCheckboxStates; let i = index"
+                  [class.gray]="!state.active"
+                  [class.black]="state.active">
+              {{ i + 1 }}
+            </span>
+          </div>
+          <div class="number-row">
+            <span *ngFor="let state of row.orCheckboxStates; let i = index"
+                  class="negation-symbol"
+                  [class.gray]="!state.negated"
+                  [class.red]="state.negated">
+              &not;
             </span>
           </div>
         </span>
@@ -54,10 +70,18 @@
       <td>
         <span class="blue-text" (click)="showCheckComponent('and2', rowIndex)">
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
-                  [class.gray]="!row.and2CheckboxStates[i-1].active"
-                  [class.black]="row.and2CheckboxStates[i-1].active">
-              {{ i }}
+            <span *ngFor="let state of row.and2CheckboxStates; let i = index"
+                  [class.gray]="!state.active"
+                  [class.black]="state.active">
+              {{ i + 1 }}
+            </span>
+          </div>
+          <div class="number-row">
+            <span *ngFor="let state of row.and2CheckboxStates; let i = index"
+                  class="negation-symbol"
+                  [class.gray]="!state.negated"
+                  [class.red]="state.negated">
+              &not;
             </span>
           </div>
         </span>
@@ -82,7 +106,8 @@
   </tbody>
 </table>
 <div>
-  <button (click)="generateJsonFile()">Calcola</button>
+  <div>
+  <button class="confirmation" (click)="generateJsonFile()">Calcola</button>
 </div>
 <div *ngIf="selectedInputIndex !== null" class="cell-input-container">
   <app-cell-input
