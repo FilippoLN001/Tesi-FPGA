@@ -2,7 +2,6 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th>
       <th>Input | Input &not;</th>
       <th>AND | AND &not;</th>
       <th>OR | OR &not;</th>
@@ -12,7 +11,6 @@
   </thead>
   <tbody>
     <tr *ngFor="let row of rows; let rowIndex = index">
-      <td>{{ row.id }}</td>
       <td>
         <span class="blue-text" (click)="showInputComponent(rowIndex)">
           {{ row.input }} {{ row.inputUnit }}
@@ -106,14 +104,20 @@
   </tbody>
 </table>
 <div>
-  <div>
-  <button class="confirmation" (click)="generateJsonFile()">Calcola</button>
+  <button class="confirmation"  (click)="generateJsonFile()">Calcola</button>
 </div>
 <div *ngIf="selectedInputIndex !== null" class="cell-input-container">
   <app-cell-input
     [inputValue]="rows[selectedInputIndex]['input']"
     [inputType]="rows[selectedInputIndex]['inputType']"
-    (updateInputType)="updateInputType($event)">
+    [sampled]="rows[selectedInputIndex]['sampled']"
+    [edgeDetect]="rows[selectedInputIndex]['edgeDetect']"
+    [edge]="rows[selectedInputIndex]['edge']"
+    [frequency]="rows[selectedInputIndex]['frequency']"
+    [duty]="rows[selectedInputIndex]['duty']"
+    [polarity]="rows[selectedInputIndex]['polarity']"
+    (updateInputType)="updateInputType($event)"
+    (updatePulserOptions)="updatePulserOptions($event)">
   </app-cell-input>
 </div>
 <div *ngIf="selectedCheckColumn && selectedCheckIndex !== null">

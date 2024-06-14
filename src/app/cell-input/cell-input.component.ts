@@ -8,15 +8,14 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
 export class CellInputComponent implements OnInit, OnChanges {
   @Input() inputValue!: number;
   @Input() inputType!: 'Input' | 'Pulser';
+  @Input() sampled!: boolean;
+  @Input() edgeDetect!: boolean;
+  @Input() edge!: boolean;
+  @Input() frequency!: number;
+  @Input() duty!: number;
+  @Input() polarity!: boolean;
   @Output() updateInputType = new EventEmitter<'Input' | 'Pulser'>();
-
-  sampled: boolean = true;
-  edgeDetect: boolean = true;
-  edge: boolean = true;
-
-  period: number = 0;
-  duty: number = 0;
-  polarity: boolean = true; // Impostiamo polarity su true di default
+  @Output() updatePulserOptions = new EventEmitter<{ frequency: number, duty: number, polarity: boolean }>();
 
   ngOnInit() {
     this.setDefaults();
@@ -34,7 +33,7 @@ export class CellInputComponent implements OnInit, OnChanges {
       this.edgeDetect = true;
       this.edge = true;
     } else if (this.inputType === 'Pulser') {
-      this.period = 0;
+      this.frequency = 0;
       this.duty = 0;
       this.polarity = true;
     }
@@ -54,6 +53,10 @@ export class CellInputComponent implements OnInit, OnChanges {
   }
 
   onPulserOptionChange() {
-    console.log('Pulser Options:', { frequency: this.period, duty: this.duty, polarity: this.polarity });
+    this.updatePulserOptions.emit({
+      frequency: this.frequency,
+      duty: this.duty,
+      polarity: this.polarity
+    });
   }
 }
