@@ -147,15 +147,7 @@ export class TableComponent implements OnInit {
       this.rows[this.selectedOutputIndex]['outputNegated'] = negated;
     }
   }
-
-  getNumbers(column: 'and1' | 'or' | 'and2', index: number): string {
-    const checkboxColumn: CheckboxColumn = `${column}CheckboxStates` as CheckboxColumn;
-    return this.rows[index][checkboxColumn]
-      .map((state, i) => (state.active ? (i + 1).toString() : ''))
-      .filter(num => num !== '')
-      .join(', ');
-  }
-
+  
   getCheckboxStates(column: 'and1' | 'or' | 'and2', index: number): CheckboxState[] {
     const checkboxColumn: CheckboxColumn = `${column}CheckboxStates` as CheckboxColumn;
     return this.rows[index][checkboxColumn];
