@@ -26,7 +26,23 @@
     <input type="radio" name="edge" [(ngModel)]="edge" [value]="true" (change)="onInputOptionChange()"> Rising
     <input type="radio" name="edge" [(ngModel)]="edge" [value]="false" (change)="onInputOptionChange()"> Falling
   </label>
+  <div class="silent-time-container">
+    <label>
+      Silent Time:
+      <input type="number" [(ngModel)]="silentTime" (change)="onSilentTimeChange()">
+    </label>
+    <label>
+      <input type="radio" name="silentTimeUnit" value="ms" [checked]="silentTimeUnit === 'ms'" (change)="onSilentTimeUnitChange('ms')"> ms
+    </label>
+    <label>
+      <input type="radio" name="silentTimeUnit" value="us" [checked]="silentTimeUnit === 'us'" (change)="onSilentTimeUnitChange('us')"> us
+    </label>
+    <label>
+      <input type="radio" name="silentTimeUnit" value="ns" [checked]="silentTimeUnit === 'ns'" (change)="onSilentTimeUnitChange('ns')"> ns
+    </label>
+  </div>
 </div>
+
 
 <div *ngIf="inputType === 'Pulser'" class="cell-input-options">
   <label>
@@ -46,18 +62,5 @@
   </label>
 </div>
 
-<div class="silent-time-container">
-  <label>
-    Silent Time:
-    <input type="number" [(ngModel)]="silentTime" (change)="onSilentTimeChange()">
-  </label>
-  <label>
-    <input type="radio" name="silentTimeUnit" value="ms" [checked]="silentTimeUnit === 'ms'" (change)="onSilentTimeUnitChange('ms')"> ms
-  </label>
-  <label>
-    <input type="radio" name="silentTimeUnit" value="us" [checked]="silentTimeUnit === 'us'" (change)="onSilentTimeUnitChange('us')"> us
-  </label>
-  <label>
-    <input type="radio" name="silentTimeUnit" value="ns" [checked]="silentTimeUnit === 'ns'" (change)="onSilentTimeUnitChange('ns')"> ns
-  </label>
-</div>
+
+
