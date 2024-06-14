@@ -9,7 +9,6 @@ interface CheckboxState {
 interface TableRow {
   id: number;
   input: number;
-  inputUnit: 'ms' | 'us' | 'ns';
   inputType: 'Input' | 'Pulser';
   sampled: boolean;
   edgeDetect: boolean;
@@ -17,14 +16,15 @@ interface TableRow {
   frequency: number;
   duty: number;
   polarity: boolean;
-  silentTime: number;
-  silentTimeUnit: 'ms' | 'us' | 'ns';
+  inputSilentTime: number;
+  inputSilentTimeUnit: 'ms' | 'us' | 'ns';
   and1CheckboxStates: CheckboxState[];
   orCheckboxStates: CheckboxState[];
   and2CheckboxStates: CheckboxState[];
   output: number;
-  outputUnit: 'ms' | 'us' | 'ns';
   outputNegated: boolean;
+  outputSilentTime: number;
+  outputSilentTimeUnit: 'ms' | 'us' | 'ns';
 }
 
 type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxStates';
@@ -39,7 +39,6 @@ export class TableComponent implements OnInit {
   rows: TableRow[] = Array(8).fill(0).map((_, index) => ({
     id: index + 1,
     input: 0,
-    inputUnit: 'ms',
     inputType: 'Input',
     sampled: true,
     edgeDetect: true,
@@ -47,11 +46,12 @@ export class TableComponent implements OnInit {
     frequency: 0,
     duty: 0,
     polarity: true,
-    silentTime: 0,
-    silentTimeUnit: 'ms',
+    inputSilentTime: 0,
+    inputSilentTimeUnit: 'ms',
     output: 0,
-    outputUnit: 'ms',
     outputNegated: false,
+    outputSilentTime: 0,
+    outputSilentTimeUnit: 'ms',
     and1CheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false })),
     orCheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false })),
     and2CheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false }))
@@ -134,11 +134,11 @@ export class TableComponent implements OnInit {
 
   updateSilentTime(event: { silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }) {
     if (this.selectedInputIndex !== null) {
-      this.rows[this.selectedInputIndex].silentTime = event.silentTime;
-      this.rows[this.selectedInputIndex].silentTimeUnit = event.silentTimeUnit;
+      this.rows[this.selectedInputIndex].inputSilentTime = event.silentTime;
+      this.rows[this.selectedInputIndex].inputSilentTimeUnit = event.silentTimeUnit;
     } else if (this.selectedOutputIndex !== null) {
-      this.rows[this.selectedOutputIndex].silentTime = event.silentTime;
-      this.rows[this.selectedOutputIndex].silentTimeUnit = event.silentTimeUnit;
+      this.rows[this.selectedOutputIndex].outputSilentTime = event.silentTime;
+      this.rows[this.selectedOutputIndex].outputSilentTimeUnit = event.silentTimeUnit;
     }
   }
 
@@ -165,14 +165,12 @@ export class TableComponent implements OnInit {
     const jsonRows = this.rows.map(row => {
       const rowData: any = {
         id: row.id,
-        input: row.input,
-        inputUnit: row.inputUnit,
         inputType: row.inputType,
-        silentTime: row.silentTime,
-        silentTimeUnit: row.silentTimeUnit,
-        output: row.output,
-        outputUnit: row.outputUnit,
+        inputSilentTime: row.inputSilentTime,
+        inputSilentTimeUnit: row.inputSilentTimeUnit,
         outputNegated: row.outputNegated,
+        outputSilentTime: row.outputSilentTime,
+        outputSilentTimeUnit: row.outputSilentTimeUnit,
         and1CheckboxStates: row.and1CheckboxStates.map((state, index) => ({
           number: index + 1,
           active: state.active,

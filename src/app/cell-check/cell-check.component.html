@@ -3,11 +3,11 @@
     <div class="checkbox-item" *ngFor="let state of selectedStates; let i = index">
       <label>
         <input type="checkbox" [checked]="state.active" (change)="toggleActive(i)">
-        Attivo {{ i + 1 }}
+        Active {{ i + 1 }}
       </label>
       <label>
         <input type="checkbox" [checked]="state.negated" (change)="toggleNegated(i)">
-        Negato {{ i + 1 }}
+        NEgated {{ i + 1 }}
       </label>
     </div>
   </div>
