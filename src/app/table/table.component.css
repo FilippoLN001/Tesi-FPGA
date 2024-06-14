@@ -1,20 +1,43 @@
+h1{
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+
 th, td {
-  border: 1px solid black;
-  padding: 8px;
+  padding: 12px;
   text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 th {
+  background-color: #4CAF50;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+tr:hover {
+  background-color: #f1f1f1;
+}
+
 .blue-text {
-  color: blue;
+  color: #007BFF;
   cursor: pointer;
 }
 
@@ -30,11 +53,11 @@ th {
 }
 
 .number-row span.gray {
-  color: #d3d3d3; /* Grigio più chiaro per maggiore contrasto */
+  color: #d3d3d3;
 }
 
 .number-row span.black {
-  color: #000000; /* Nero assoluto per massimo contrasto */
+  color: #000000;
 }
 
 .negation-symbol {
@@ -44,13 +67,44 @@ th {
 }
 
 .negation-symbol.gray {
-  color: #d3d3d3; /* Grigio più chiaro per maggiore contrasto */
+  color: #d3d3d3;
 }
 
 .negation-symbol.red {
-  color: red; /* Rosso per il simbolo di negazione */
+  color: red;
 }
 
-.confirmation{
+.confirmation {
   margin-top: 20px;
+  text-align: center;
+}
+
+.confirmation button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.confirmation button:hover {
+  background-color: #45a049;
+}
+
+.silent-time-container {
+  margin-top: 10px;
+}
+
+/* Centering Edge Counter */
+.edge-counter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

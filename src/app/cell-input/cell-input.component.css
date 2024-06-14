@@ -1,31 +1,51 @@
 .cell-input-container {
-    margin-top: 10px;
-  }
-  
-  .cell-input-container p {
-    font-weight: bold;
-  }
-  
-  .cell-input-container label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .cell-input-container input[type="radio"] {
-    margin-right: 5px;
-  }
-  
-  .cell-input-options {
-    margin-top: 10px;
-  }
-  
-  .cell-input-options label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .cell-input-options input[type="radio"],
-  .cell-input-options input[type="number"] {
-    margin-right: 10px;
-  }
-  
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cell-input-container p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.cell-input-container label {
+  display: block;
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.cell-input-options {
+  margin-top: 16px;
+}
+
+.cell-input-options label {
+  display: block;
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.silent-time-container {
+  margin-top: 16px;
+}
+
+.silent-time-container label {
+  display: inline-block;
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.silent-time-container input[type="number"] {
+  margin-left: 8px;
+  padding: 4px;
+  font-size: 14px;
+  width: 80px;
+}
+
+.silent-time-container input[type="radio"] {
+  margin-left: 8px;
+}
