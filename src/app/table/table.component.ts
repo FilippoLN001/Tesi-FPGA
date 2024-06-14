@@ -35,7 +35,7 @@ type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxS
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
-  title = 'Tabella Interattiva';
+  title = 'Tadpole';
   rows: TableRow[] = Array(8).fill(0).map((_, index) => ({
     id: index + 1,
     input: 0,
