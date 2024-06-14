@@ -1,3 +1,4 @@
+<br>
 <div *ngFor="let state of selectedStates; let i = index">
   <label>
     <input type="checkbox" [checked]="state.active" (change)="toggleActive(i)"> Attivo {{ i + 1 }}

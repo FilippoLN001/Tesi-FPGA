@@ -2,7 +2,7 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th>  <!-- Aggiungi l'intestazione della colonna ID -->
+      <th>ID</th>
       <th>Input | Input &not;</th>
       <th>AND | AND &not;</th>
       <th>OR | OR &not;</th>
@@ -12,30 +12,27 @@
   </thead>
   <tbody>
     <tr *ngFor="let row of rows; let rowIndex = index">
-      <td>{{ row.id }}</td>  <!-- Mostra l'ID della riga -->
+      <td>{{ row.id }}</td>
       <td>
         <span class="blue-text" (click)="showInputComponent(rowIndex)">
-          {{ row.input }} {{ row.inputUnit }}
+          {{ row.input }}
         </span>
-        <div *ngIf="selectedInputIndex === rowIndex">
-          <label>
-            <input type="radio" name="inputUnit{{rowIndex}}" value="ms" [checked]="row.inputUnit === 'ms'" (change)="updateInputUnit('ms')"> ms
-          </label>
-          <label>
-            <input type="radio" name="inputUnit{{rowIndex}}" value="us" [checked]="row.inputUnit === 'us'" (change)="updateInputUnit('us')"> us
-          </label>
-          <label>
-            <input type="radio" name="inputUnit{{rowIndex}}" value="ns" [checked]="row.inputUnit === 'ns'" (change)="updateInputUnit('ns')"> ns
-          </label>
-        </div>
       </td>
       <td>
         <span class="blue-text" (click)="showCheckComponent('and1', rowIndex)">
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
-                  [class.gray]="!row.and1CheckboxStates[i-1].active"
-                  [class.black]="row.and1CheckboxStates[i-1].active">
-              {{ i }}
+            <span *ngFor="let state of row.and1CheckboxStates; let i = index"
+                  [class.gray]="!state.active"
+                  [class.black]="state.active">
+              {{ i + 1 }}
+            </span>
+          </div>
+          <div class="number-row">
+            <span *ngFor="let state of row.and1CheckboxStates; let i = index"
+                  class="negation-symbol"
+                  [class.gray]="!state.negated"
+                  [class.red]="state.negated">
+              &not;
             </span>
           </div>
         </span>
@@ -43,10 +40,18 @@
       <td>
         <span class="blue-text" (click)="showCheckComponent('or', rowIndex)">
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
-                  [class.gray]="!row.orCheckboxStates[i-1].active"
-                  [class.black]="row.orCheckboxStates[i-1].active">
-              {{ i }}
+            <span *ngFor="let state of row.orCheckboxStates; let i = index"
+                  [class.gray]="!state.active"
+                  [class.black]="state.active">
+              {{ i + 1 }}
+            </span>
+          </div>
+          <div class="number-row">
+            <span *ngFor="let state of row.orCheckboxStates; let i = index"
+                  class="negation-symbol"
+                  [class.gray]="!state.negated"
+                  [class.red]="state.negated">
+              &not;
             </span>
           </div>
         </span>
@@ -54,41 +59,48 @@
       <td>
         <span class="blue-text" (click)="showCheckComponent('and2', rowIndex)">
           <div class="number-row">
-            <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
-                  [class.gray]="!row.and2CheckboxStates[i-1].active"
-                  [class.black]="row.and2CheckboxStates[i-1].active">
-              {{ i }}
+            <span *ngFor="let state of row.and2CheckboxStates; let i = index"
+                  [class.gray]="!state.active"
+                  [class.black]="state.active">
+              {{ i + 1 }}
+            </span>
+          </div>
+          <div class="number-row">
+            <span *ngFor="let state of row.and2CheckboxStates; let i = index"
+                  class="negation-symbol"
+                  [class.gray]="!state.negated"
+                  [class.red]="state.negated">
+              &not;
             </span>
           </div>
         </span>
       </td>
       <td>
         <span class="blue-text" (click)="showOutputComponent(rowIndex)">
-          {{ row.output }} {{ row.outputUnit }}<span *ngIf="row.outputNegated"> &not;</span>
+          {{ row.output }}
         </span>
-        <div *ngIf="selectedOutputIndex === rowIndex">
-          <label>
-            <input type="radio" name="outputUnit{{rowIndex}}" value="ms" [checked]="row.outputUnit === 'ms'" (change)="updateOutputUnit('ms')"> ms
-          </label>
-          <label>
-            <input type="radio" name="outputUnit{{rowIndex}}" value="us" [checked]="row.outputUnit === 'us'" (change)="updateOutputUnit('us')"> us
-          </label>
-          <label>
-            <input type="radio" name="outputUnit{{rowIndex}}" value="ns" [checked]="row.outputUnit === 'ns'" (change)="updateOutputUnit('ns')"> ns
-          </label>
-        </div>
       </td>
     </tr>
   </tbody>
 </table>
-<div>
+<div class="confirmation">
   <button (click)="generateJsonFile()">Calcola</button>
 </div>
 <div *ngIf="selectedInputIndex !== null" class="cell-input-container">
   <app-cell-input
     [inputValue]="rows[selectedInputIndex]['input']"
     [inputType]="rows[selectedInputIndex]['inputType']"
-    (updateInputType)="updateInputType($event)">
+    [sampled]="rows[selectedInputIndex]['sampled']"
+    [edgeDetect]="rows[selectedInputIndex]['edgeDetect']"
+    [edge]="rows[selectedInputIndex]['edge']"
+    [frequency]="rows[selectedInputIndex]['frequency']"
+    [duty]="rows[selectedInputIndex]['duty']"
+    [polarity]="rows[selectedInputIndex]['polarity']"
+    [silentTime]="rows[selectedInputIndex]['silentTime']"
+    [silentTimeUnit]="rows[selectedInputIndex]['silentTimeUnit']"
+    (updateInputType)="updateInputType($event)"
+    (updatePulserOptions)="updatePulserOptions($event)"
+    (updateSilentTime)="updateSilentTime($event)">
   </app-cell-input>
 </div>
 <div *ngIf="selectedCheckColumn && selectedCheckIndex !== null">
@@ -102,6 +114,9 @@
 <div *ngIf="selectedOutputIndex !== null">
   <app-cell-output
     [outputNegated]="rows[selectedOutputIndex]['outputNegated']"
-    (updateOutputNegated)="updateOutputNegated($event)">
+    [silentTime]="rows[selectedOutputIndex]['silentTime']"
+    [silentTimeUnit]="rows[selectedOutputIndex]['silentTimeUnit']"
+    (updateOutputNegated)="updateOutputNegated($event)"
+    (updateSilentTime)="updateSilentTime($event)">
   </app-cell-output>
 </div>

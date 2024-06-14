@@ -30,8 +30,8 @@
 
 <div *ngIf="inputType === 'Pulser'" class="cell-input-options">
   <label>
-    Period:
-    <input type="number" [(ngModel)]="period" (change)="onPulserOptionChange()">
+    Frequency:
+    <input type="number" [(ngModel)]="frequency" (change)="onPulserOptionChange()">
   </label>
   <br>
   <label>
@@ -43,5 +43,21 @@
     Polarity:
     <input type="radio" name="polarity" [(ngModel)]="polarity" [value]="true" (change)="onPulserOptionChange()"> True
     <input type="radio" name="polarity" [(ngModel)]="polarity" [value]="false" (change)="onPulserOptionChange()"> False
+  </label>
+</div>
+<br>
+<div class="silent-time-container">
+  <label>
+    Silent Time:
+    <input type="number" [(ngModel)]="silentTime" (change)="onSilentTimeChange()">
+  </label>
+  <label>
+    <input type="radio" name="silentTimeUnit" value="ms" [checked]="silentTimeUnit === 'ms'" (change)="onSilentTimeUnitChange('ms')"> ms
+  </label>
+  <label>
+    <input type="radio" name="silentTimeUnit" value="us" [checked]="silentTimeUnit === 'us'" (change)="onSilentTimeUnitChange('us')"> us
+  </label>
+  <label>
+    <input type="radio" name="silentTimeUnit" value="ns" [checked]="silentTimeUnit === 'ns'" (change)="onSilentTimeUnitChange('ns')"> ns
   </label>
 </div>

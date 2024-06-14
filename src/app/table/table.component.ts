@@ -7,16 +7,17 @@ interface CheckboxState {
 }
 
 interface TableRow {
-  id: number;  // Aggiungiamo questa proprietà
+  id: number;
   input: number;
-  inputUnit: 'ms' | 'us' | 'ns';
   inputType: 'Input' | 'Pulser';
-  sampled?: boolean;
-  edgeDetect?: boolean;
-  edge?: boolean;
-  frequency?: number;
-  duty?: number;
-  polarity?: boolean;
+  sampled: boolean;
+  edgeDetect: boolean;
+  edge: boolean;
+  frequency: number;
+  duty: number;
+  polarity: boolean;
+  silentTime: number;
+  silentTimeUnit: 'ms' | 'us' | 'ns';
   and1: string;
   or: string;
   and2: string;
@@ -38,13 +39,17 @@ type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxS
 export class TableComponent implements OnInit, OnDestroy {
   title = 'Tabella Interattiva';
   rows: TableRow[] = Array(8).fill(0).map((_, index) => ({
-    id: index + 1,  // Assegniamo un ID univoco a ciascuna riga
+    id: index + 1,
     input: 0,
-    inputUnit: 'ms',
     inputType: 'Input',
     sampled: true,
     edgeDetect: true,
     edge: true,
+    frequency: 0,
+    duty: 0,
+    polarity: true,
+    silentTime: 0,
+    silentTimeUnit: 'ms',
     and1: '',
     or: '',
     and2: '',
@@ -111,24 +116,40 @@ export class TableComponent implements OnInit, OnDestroy {
   updateInputType(inputType: 'Input' | 'Pulser') {
     if (this.selectedInputIndex !== null) {
       this.rows[this.selectedInputIndex]['inputType'] = inputType;
+      // Assicuriamoci che tutte le proprietà siano definite quando l'inputType cambia
+      if (inputType === 'Input') {
+        this.rows[this.selectedInputIndex].sampled = true;
+        this.rows[this.selectedInputIndex].edgeDetect = true;
+        this.rows[this.selectedInputIndex].edge = true;
+      } else if (inputType === 'Pulser') {
+        this.rows[this.selectedInputIndex].frequency = 0;
+        this.rows[this.selectedInputIndex].duty = 0;
+        this.rows[this.selectedInputIndex].polarity = true;
+      }
+    }
+  }
+
+  updatePulserOptions(event: { frequency: number, duty: number, polarity: boolean }) {
+    if (this.selectedInputIndex !== null) {
+      this.rows[this.selectedInputIndex].frequency = event.frequency;
+      this.rows[this.selectedInputIndex].duty = event.duty;
+      this.rows[this.selectedInputIndex].polarity = event.polarity;
+    }
+  }
+
+  updateSilentTime(event: { silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }) {
+    if (this.selectedInputIndex !== null) {
+      this.rows[this.selectedInputIndex].silentTime = event.silentTime;
+      this.rows[this.selectedInputIndex].silentTimeUnit = event.silentTimeUnit;
+    } else if (this.selectedOutputIndex !== null) {
+      this.rows[this.selectedOutputIndex].silentTime = event.silentTime;
+      this.rows[this.selectedOutputIndex].silentTimeUnit = event.silentTimeUnit;
     }
   }
 
   updateOutputNegated(negated: boolean) {
     if (this.selectedOutputIndex !== null) {
       this.rows[this.selectedOutputIndex]['outputNegated'] = negated;
-    }
-  }
-
-  updateInputUnit(unit: 'ms' | 'us' | 'ns') {
-    if (this.selectedInputIndex !== null) {
-      this.rows[this.selectedInputIndex]['inputUnit'] = unit;
-    }
-  }
-
-  updateOutputUnit(unit: 'ms' | 'us' | 'ns') {
-    if (this.selectedOutputIndex !== null) {
-      this.rows[this.selectedOutputIndex]['outputUnit'] = unit;
     }
   }
 
@@ -148,13 +169,11 @@ export class TableComponent implements OnInit, OnDestroy {
   generateJsonFile() {
     const jsonRows = this.rows.map(row => {
       const rowData: any = {
-        id: row.id,  // Includiamo l'ID nel file JSON
+        id: row.id,
         input: row.input,
-        inputUnit: row.inputUnit,
         inputType: row.inputType,
-        and1: row.and1,
-        or: row.or,
-        and2: row.and2,
+        silentTime: row.silentTime,
+        silentTimeUnit: row.silentTimeUnit,
         output: row.output,
         outputUnit: row.outputUnit,
         outputNegated: row.outputNegated,
