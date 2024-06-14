@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { saveAs } from 'file-saver';
 
 interface CheckboxState {
@@ -9,6 +9,7 @@ interface CheckboxState {
 interface TableRow {
   id: number;
   input: number;
+  inputUnit: 'ms' | 'us' | 'ns';
   inputType: 'Input' | 'Pulser';
   sampled: boolean;
   edgeDetect: boolean;
@@ -18,15 +19,12 @@ interface TableRow {
   polarity: boolean;
   silentTime: number;
   silentTimeUnit: 'ms' | 'us' | 'ns';
-  and1: string;
-  or: string;
-  and2: string;
-  output: number;
-  outputUnit: 'ms' | 'us' | 'ns';
-  outputNegated: boolean;
   and1CheckboxStates: CheckboxState[];
   orCheckboxStates: CheckboxState[];
   and2CheckboxStates: CheckboxState[];
+  output: number;
+  outputUnit: 'ms' | 'us' | 'ns';
+  outputNegated: boolean;
 }
 
 type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxStates';
@@ -36,11 +34,12 @@ type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxS
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit {
   title = 'Tabella Interattiva';
   rows: TableRow[] = Array(8).fill(0).map((_, index) => ({
     id: index + 1,
     input: 0,
+    inputUnit: 'ms',
     inputType: 'Input',
     sampled: true,
     edgeDetect: true,
@@ -50,9 +49,6 @@ export class TableComponent implements OnInit, OnDestroy {
     polarity: true,
     silentTime: 0,
     silentTimeUnit: 'ms',
-    and1: '',
-    or: '',
-    and2: '',
     output: 0,
     outputUnit: 'ms',
     outputNegated: false,
@@ -116,7 +112,6 @@ export class TableComponent implements OnInit, OnDestroy {
   updateInputType(inputType: 'Input' | 'Pulser') {
     if (this.selectedInputIndex !== null) {
       this.rows[this.selectedInputIndex]['inputType'] = inputType;
-      // Assicuriamoci che tutte le proprietà siano definite quando l'inputType cambia
       if (inputType === 'Input') {
         this.rows[this.selectedInputIndex].sampled = true;
         this.rows[this.selectedInputIndex].edgeDetect = true;
@@ -171,6 +166,7 @@ export class TableComponent implements OnInit, OnDestroy {
       const rowData: any = {
         id: row.id,
         input: row.input,
+        inputUnit: row.inputUnit,
         inputType: row.inputType,
         silentTime: row.silentTime,
         silentTimeUnit: row.silentTimeUnit,

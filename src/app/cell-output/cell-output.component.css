@@ -1,36 +1,36 @@
 .cell-output-container {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 16px;
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .cell-output-container label {
-    display: block;
-    margin: 8px 0;
-    font-size: 16px;
-  }
-  
-  .silent-time-container {
-    margin-top: 16px;
-  }
-  
-  .silent-time-container label {
-    display: inline-block;
-    margin: 8px 0;
-    font-size: 16px;
-  }
-  
-  .silent-time-container input[type="number"] {
-    margin-left: 8px;
-    padding: 4px;
-    font-size: 14px;
-    width: 80px;
-  }
-  
-  .silent-time-container input[type="radio"] {
-    margin-left: 8px;
-  }
-  
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cell-output-container label {
+  font-size: 16px;
+}
+
+.silent-time-container {
+  margin-top: 16px;
+}
+
+.silent-time-container label {
+  display: inline-block;
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.silent-time-container input[type="number"] {
+  margin-left: 8px;
+  padding: 4px;
+  font-size: 14px;
+  width: 80px;
+}
+
+.silent-time-container input[type="radio"] {
+  margin-left: 8px;
+}

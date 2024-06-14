@@ -81,6 +81,7 @@
         <div class="edge-counter-container">
           <span class="blue-text" (click)="showOutputComponent(rowIndex)">
             {{ row.output }}
+            <span *ngIf="row.outputNegated" class="negation-symbol">&not;</span>
           </span>
         </div>
       </td>
