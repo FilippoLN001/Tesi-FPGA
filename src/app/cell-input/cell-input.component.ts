@@ -14,8 +14,11 @@ export class CellInputComponent implements OnInit, OnChanges {
   @Input() frequency!: number;
   @Input() duty!: number;
   @Input() polarity!: boolean;
+  @Input() silentTime!: number;
+  @Input() silentTimeUnit!: 'ms' | 'us' | 'ns';
   @Output() updateInputType = new EventEmitter<'Input' | 'Pulser'>();
   @Output() updatePulserOptions = new EventEmitter<{ frequency: number, duty: number, polarity: boolean }>();
+  @Output() updateSilentTime = new EventEmitter<{ silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }>();
 
   ngOnInit() {
     this.setDefaults();
@@ -37,6 +40,8 @@ export class CellInputComponent implements OnInit, OnChanges {
       this.duty = 0;
       this.polarity = true;
     }
+    this.silentTime = 0;
+    this.silentTimeUnit = 'ms';
   }
 
   onInputTypeChange(inputType: 'Input' | 'Pulser') {
@@ -58,5 +63,17 @@ export class CellInputComponent implements OnInit, OnChanges {
       duty: this.duty,
       polarity: this.polarity
     });
+  }
+
+  onSilentTimeChange() {
+    this.updateSilentTime.emit({
+      silentTime: this.silentTime,
+      silentTimeUnit: this.silentTimeUnit
+    });
+  }
+
+  onSilentTimeUnitChange(unit: 'ms' | 'us' | 'ns') {
+    this.silentTimeUnit = unit;
+    this.onSilentTimeChange();
   }
 }
