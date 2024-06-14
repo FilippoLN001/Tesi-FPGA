@@ -14,9 +14,11 @@
     <tr *ngFor="let row of rows; let rowIndex = index">
       <td>{{ row.id }}</td>
       <td>
-        <span class="blue-text" (click)="showInputComponent(rowIndex)">
-          {{ row.input }}
-        </span>
+        <div class="edge-counter-container">
+          <span class="blue-text" (click)="showInputComponent(rowIndex)">
+            {{ row.input }}
+          </span>
+        </div>
       </td>
       <td>
         <span class="blue-text" (click)="showCheckComponent('and1', rowIndex)">
@@ -76,9 +78,12 @@
         </span>
       </td>
       <td>
-        <span class="blue-text" (click)="showOutputComponent(rowIndex)">
-          {{ row.output }}
-        </span>
+        <div class="edge-counter-container">
+          <span class="blue-text" (click)="showOutputComponent(rowIndex)">
+            {{ row.output }}
+            <span *ngIf="row.outputNegated" class="negation-symbol">&not;</span>
+          </span>
+        </div>
       </td>
     </tr>
   </tbody>
@@ -96,8 +101,8 @@
     [frequency]="rows[selectedInputIndex]['frequency']"
     [duty]="rows[selectedInputIndex]['duty']"
     [polarity]="rows[selectedInputIndex]['polarity']"
-    [silentTime]="rows[selectedInputIndex]['silentTime']"
-    [silentTimeUnit]="rows[selectedInputIndex]['silentTimeUnit']"
+    [silentTime]="rows[selectedInputIndex]['inputSilentTime']"
+    [silentTimeUnit]="rows[selectedInputIndex]['inputSilentTimeUnit']"
     (updateInputType)="updateInputType($event)"
     (updatePulserOptions)="updatePulserOptions($event)"
     (updateSilentTime)="updateSilentTime($event)">
@@ -114,8 +119,8 @@
 <div *ngIf="selectedOutputIndex !== null">
   <app-cell-output
     [outputNegated]="rows[selectedOutputIndex]['outputNegated']"
-    [silentTime]="rows[selectedOutputIndex]['silentTime']"
-    [silentTimeUnit]="rows[selectedOutputIndex]['silentTimeUnit']"
+    [silentTime]="rows[selectedOutputIndex]['outputSilentTime']"
+    [silentTimeUnit]="rows[selectedOutputIndex]['outputSilentTimeUnit']"
     (updateOutputNegated)="updateOutputNegated($event)"
     (updateSilentTime)="updateSilentTime($event)">
   </app-cell-output>

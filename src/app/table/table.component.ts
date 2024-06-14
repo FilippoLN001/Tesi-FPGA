@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { saveAs } from 'file-saver';
 
 interface CheckboxState {
@@ -16,17 +16,15 @@ interface TableRow {
   frequency: number;
   duty: number;
   polarity: boolean;
-  silentTime: number;
-  silentTimeUnit: 'ms' | 'us' | 'ns';
-  and1: string;
-  or: string;
-  and2: string;
-  output: number;
-  outputUnit: 'ms' | 'us' | 'ns';
-  outputNegated: boolean;
+  inputSilentTime: number;
+  inputSilentTimeUnit: 'ms' | 'us' | 'ns';
   and1CheckboxStates: CheckboxState[];
   orCheckboxStates: CheckboxState[];
   and2CheckboxStates: CheckboxState[];
+  output: number;
+  outputNegated: boolean;
+  outputSilentTime: number;
+  outputSilentTimeUnit: 'ms' | 'us' | 'ns';
 }
 
 type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxStates';
@@ -36,8 +34,8 @@ type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxS
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, OnDestroy {
-  title = 'Tabella Interattiva';
+export class TableComponent implements OnInit {
+  title = 'Tadpole';
   rows: TableRow[] = Array(8).fill(0).map((_, index) => ({
     id: index + 1,
     input: 0,
@@ -48,14 +46,12 @@ export class TableComponent implements OnInit, OnDestroy {
     frequency: 0,
     duty: 0,
     polarity: true,
-    silentTime: 0,
-    silentTimeUnit: 'ms',
-    and1: '',
-    or: '',
-    and2: '',
+    inputSilentTime: 0,
+    inputSilentTimeUnit: 'ms',
     output: 0,
-    outputUnit: 'ms',
     outputNegated: false,
+    outputSilentTime: 0,
+    outputSilentTimeUnit: 'ms',
     and1CheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false })),
     orCheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false })),
     and2CheckboxStates: Array(8).fill(0).map(() => ({ active: false, negated: false }))
@@ -116,7 +112,6 @@ export class TableComponent implements OnInit, OnDestroy {
   updateInputType(inputType: 'Input' | 'Pulser') {
     if (this.selectedInputIndex !== null) {
       this.rows[this.selectedInputIndex]['inputType'] = inputType;
-      // Assicuriamoci che tutte le proprietà siano definite quando l'inputType cambia
       if (inputType === 'Input') {
         this.rows[this.selectedInputIndex].sampled = true;
         this.rows[this.selectedInputIndex].edgeDetect = true;
@@ -139,11 +134,11 @@ export class TableComponent implements OnInit, OnDestroy {
 
   updateSilentTime(event: { silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }) {
     if (this.selectedInputIndex !== null) {
-      this.rows[this.selectedInputIndex].silentTime = event.silentTime;
-      this.rows[this.selectedInputIndex].silentTimeUnit = event.silentTimeUnit;
+      this.rows[this.selectedInputIndex].inputSilentTime = event.silentTime;
+      this.rows[this.selectedInputIndex].inputSilentTimeUnit = event.silentTimeUnit;
     } else if (this.selectedOutputIndex !== null) {
-      this.rows[this.selectedOutputIndex].silentTime = event.silentTime;
-      this.rows[this.selectedOutputIndex].silentTimeUnit = event.silentTimeUnit;
+      this.rows[this.selectedOutputIndex].outputSilentTime = event.silentTime;
+      this.rows[this.selectedOutputIndex].outputSilentTimeUnit = event.silentTimeUnit;
     }
   }
 
@@ -170,13 +165,12 @@ export class TableComponent implements OnInit, OnDestroy {
     const jsonRows = this.rows.map(row => {
       const rowData: any = {
         id: row.id,
-        input: row.input,
         inputType: row.inputType,
-        silentTime: row.silentTime,
-        silentTimeUnit: row.silentTimeUnit,
-        output: row.output,
-        outputUnit: row.outputUnit,
+        inputSilentTime: row.inputSilentTime,
+        inputSilentTimeUnit: row.inputSilentTimeUnit,
         outputNegated: row.outputNegated,
+        outputSilentTime: row.outputSilentTime,
+        outputSilentTimeUnit: row.outputSilentTimeUnit,
         and1CheckboxStates: row.and1CheckboxStates.map((state, index) => ({
           number: index + 1,
           active: state.active,
