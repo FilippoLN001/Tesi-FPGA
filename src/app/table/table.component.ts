@@ -79,7 +79,7 @@ export class TableComponent implements OnInit {
         row.input += 1;
         row.output += 1;
       });
-    }, 1000);
+    }, 1000); // qua si modifica la velocita' dei contatori
   }
 
   showInputComponent(index: number) {
