@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { saveAs } from 'file-saver';
 
 interface CheckboxState {
@@ -34,8 +34,8 @@ type CheckboxColumn = 'and1CheckboxStates' | 'orCheckboxStates' | 'and2CheckboxS
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit {
-  title = 'TADpole';
+export class TableComponent implements OnInit, OnDestroy {
+  title = 'Tabella Interattiva';
   rows: TableRow[] = Array(8).fill(0).map((_, index) => ({
     id: index + 1,
     input: 0,
@@ -79,7 +79,7 @@ export class TableComponent implements OnInit {
         row.input += 1;
         row.output += 1;
       });
-    }, 1000); // qua si modifica la velocita' dei contatori
+    }, 1000);
   }
 
   showInputComponent(index: number) {
@@ -109,37 +109,37 @@ export class TableComponent implements OnInit {
     this.rows[index][checkboxColumn] = values;
   }
 
-  updateInputType(inputType: 'Input' | 'Pulser') {
-    if (this.selectedInputIndex !== null) {
-      this.rows[this.selectedInputIndex]['inputType'] = inputType;
-      if (inputType === 'Input') {
-        this.rows[this.selectedInputIndex].sampled = true;
-        this.rows[this.selectedInputIndex].edgeDetect = true;
-        this.rows[this.selectedInputIndex].edge = true;
-      } else if (inputType === 'Pulser') {
-        this.rows[this.selectedInputIndex].frequency = 0;
-        this.rows[this.selectedInputIndex].duty = 0;
-        this.rows[this.selectedInputIndex].polarity = true;
-      }
-    }
+  updateInputType(event: { index: number, inputType: 'Input' | 'Pulser' }) {
+    const { index, inputType } = event;
+    this.rows[index].inputType = inputType;
   }
 
-  updatePulserOptions(event: { frequency: number, duty: number, polarity: boolean }) {
-    if (this.selectedInputIndex !== null) {
-      this.rows[this.selectedInputIndex].frequency = event.frequency;
-      this.rows[this.selectedInputIndex].duty = event.duty;
-      this.rows[this.selectedInputIndex].polarity = event.polarity;
-    }
+  updatePulserOptions(event: { index: number, frequency: number, duty: number, polarity: boolean }) {
+    const { index, frequency, duty, polarity } = event;
+    this.rows[index].frequency = frequency;
+    this.rows[index].duty = duty;
+    this.rows[index].polarity = polarity;
   }
 
-  updateSilentTime(event: { silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }) {
-    if (this.selectedInputIndex !== null) {
-      this.rows[this.selectedInputIndex].inputSilentTime = event.silentTime;
-      this.rows[this.selectedInputIndex].inputSilentTimeUnit = event.silentTimeUnit;
-    } else if (this.selectedOutputIndex !== null) {
+  updateInputSilentTime(event: { index: number, silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }) {
+    const { index, silentTime, silentTimeUnit } = event;
+    this.rows[index].inputSilentTime = silentTime;
+    this.rows[index].inputSilentTimeUnit = silentTimeUnit;
+  }
+
+  updateOutputSilentTime(event: { silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }) {
+    if (this.selectedOutputIndex !== null) {
       this.rows[this.selectedOutputIndex].outputSilentTime = event.silentTime;
       this.rows[this.selectedOutputIndex].outputSilentTimeUnit = event.silentTimeUnit;
     }
+  }
+  
+
+  updateInputOptions(event: { index: number, sampled: boolean, edgeDetect: boolean, edge: boolean }) {
+    const { index, sampled, edgeDetect, edge } = event;
+    this.rows[index].sampled = sampled;
+    this.rows[index].edgeDetect = edgeDetect;
+    this.rows[index].edge = edge;
   }
 
   updateOutputNegated(negated: boolean) {
@@ -147,7 +147,15 @@ export class TableComponent implements OnInit {
       this.rows[this.selectedOutputIndex]['outputNegated'] = negated;
     }
   }
-  
+
+  getNumbers(column: 'and1' | 'or' | 'and2', index: number): string {
+    const checkboxColumn: CheckboxColumn = `${column}CheckboxStates` as CheckboxColumn;
+    return this.rows[index][checkboxColumn]
+      .map((state, i) => (state.active ? (i + 1).toString() : ''))
+      .filter(num => num !== '')
+      .join(', ');
+  }
+
   getCheckboxStates(column: 'and1' | 'or' | 'and2', index: number): CheckboxState[] {
     const checkboxColumn: CheckboxColumn = `${column}CheckboxStates` as CheckboxColumn;
     return this.rows[index][checkboxColumn];

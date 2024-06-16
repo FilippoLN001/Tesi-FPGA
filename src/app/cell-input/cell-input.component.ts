@@ -6,6 +6,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
   styleUrls: ['./cell-input.component.css']
 })
 export class CellInputComponent implements OnInit, OnChanges {
+  @Input() index!: number; // Aggiunto index
   @Input() inputValue!: number;
   @Input() inputType!: 'Input' | 'Pulser';
   @Input() sampled!: boolean;
@@ -16,9 +17,10 @@ export class CellInputComponent implements OnInit, OnChanges {
   @Input() polarity!: boolean;
   @Input() silentTime!: number;
   @Input() silentTimeUnit!: 'ms' | 'us' | 'ns';
-  @Output() updateInputType = new EventEmitter<'Input' | 'Pulser'>();
-  @Output() updatePulserOptions = new EventEmitter<{ frequency: number, duty: number, polarity: boolean }>();
-  @Output() updateSilentTime = new EventEmitter<{ silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }>();
+  @Output() updateInputType = new EventEmitter<{ index: number, inputType: 'Input' | 'Pulser' }>();
+  @Output() updatePulserOptions = new EventEmitter<{ index: number, frequency: number, duty: number, polarity: boolean }>();
+  @Output() updateSilentTime = new EventEmitter<{ index: number, silentTime: number, silentTimeUnit: 'ms' | 'us' | 'ns' }>();
+  @Output() updateInputOptions = new EventEmitter<{ index: number, sampled: boolean, edgeDetect: boolean, edge: boolean }>();
 
   ngOnInit() {
     this.setDefaults();
@@ -45,7 +47,7 @@ export class CellInputComponent implements OnInit, OnChanges {
   }
 
   onInputTypeChange(inputType: 'Input' | 'Pulser') {
-    this.updateInputType.emit(inputType);
+    this.updateInputType.emit({ index: this.index, inputType });
     if (inputType === 'Input') {
       this.setDefaults();
     } else if (inputType === 'Pulser') {
@@ -54,11 +56,17 @@ export class CellInputComponent implements OnInit, OnChanges {
   }
 
   onInputOptionChange() {
-    console.log('Input Options:', { sampled: this.sampled, edgeDetect: this.edgeDetect, edge: this.edge });
+    this.updateInputOptions.emit({
+      index: this.index,
+      sampled: this.sampled,
+      edgeDetect: this.edgeDetect,
+      edge: this.edge
+    });
   }
 
   onPulserOptionChange() {
     this.updatePulserOptions.emit({
+      index: this.index,
       frequency: this.frequency,
       duty: this.duty,
       polarity: this.polarity
@@ -67,6 +75,7 @@ export class CellInputComponent implements OnInit, OnChanges {
 
   onSilentTimeChange() {
     this.updateSilentTime.emit({
+      index: this.index,
       silentTime: this.silentTime,
       silentTimeUnit: this.silentTimeUnit
     });

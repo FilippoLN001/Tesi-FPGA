@@ -81,7 +81,6 @@
         <div class="edge-counter-container">
           <span class="blue-text" (click)="showOutputComponent(rowIndex)">
             {{ row.output }}
-            <span *ngIf="row.outputNegated" class="negation-symbol">&not;</span>
           </span>
         </div>
       </td>
@@ -93,6 +92,7 @@
 </div>
 <div *ngIf="selectedInputIndex !== null" class="cell-input-container">
   <app-cell-input
+    [index]="selectedInputIndex"
     [inputValue]="rows[selectedInputIndex]['input']"
     [inputType]="rows[selectedInputIndex]['inputType']"
     [sampled]="rows[selectedInputIndex]['sampled']"
@@ -105,7 +105,8 @@
     [silentTimeUnit]="rows[selectedInputIndex]['inputSilentTimeUnit']"
     (updateInputType)="updateInputType($event)"
     (updatePulserOptions)="updatePulserOptions($event)"
-    (updateSilentTime)="updateSilentTime($event)">
+    (updateSilentTime)="updateInputSilentTime($event)"
+    (updateInputOptions)="updateInputOptions($event)">
   </app-cell-input>
 </div>
 <div *ngIf="selectedCheckColumn && selectedCheckIndex !== null">
@@ -122,6 +123,6 @@
     [silentTime]="rows[selectedOutputIndex]['outputSilentTime']"
     [silentTimeUnit]="rows[selectedOutputIndex]['outputSilentTimeUnit']"
     (updateOutputNegated)="updateOutputNegated($event)"
-    (updateSilentTime)="updateSilentTime($event)">
+    (updateSilentTime)="updateOutputSilentTime($event)">
   </app-cell-output>
 </div>

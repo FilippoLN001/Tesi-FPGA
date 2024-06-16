@@ -5,7 +5,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
   templateUrl: './cell-output.component.html',
   styleUrls: ['./cell-output.component.css']
 })
-export class CellOutputComponent implements OnInit {
+export class CellOutputComponent implements OnInit, OnChanges {
   @Input() outputNegated!: boolean;
   @Input() silentTime!: number;
   @Input() silentTimeUnit!: 'ms' | 'us' | 'ns';
@@ -16,9 +16,15 @@ export class CellOutputComponent implements OnInit {
     this.setDefaults();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['outputNegated']) {
+      this.setDefaults();
+    }
+  }
+
   setDefaults() {
-    this.silentTime = 0;
-    this.silentTimeUnit = 'ms';
+    this.silentTime = this.silentTime || 0;
+    this.silentTimeUnit = this.silentTimeUnit || 'ms';
   }
 
   onOutputNegatedChange() {
